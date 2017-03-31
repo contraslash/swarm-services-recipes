@@ -43,5 +43,6 @@ docker service create \
 docker service create \
   --name drone-agent\
   --env-file /etc/drone/droneagentrc \
+  --mount=type=bind,src=/var/run/docker.sock,dst=/var/run/docker.sock \
   drone/drone:0.5 agent
 ```
