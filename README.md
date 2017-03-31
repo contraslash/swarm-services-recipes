@@ -14,3 +14,4 @@ List of recipes:
 - [Traefik](traefik.md)
 - [Wordpress](wordpress.md)
 - [Swarm Visualizer](visualizer.md)
+- [Drone](drone.md)
