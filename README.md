@@ -15,3 +15,4 @@ List of recipes:
 - [Wordpress](wordpress.md)
 - [Swarm Visualizer](visualizer.md)
 - [Drone](drone.md)
+- [Caddy](caddy.md)
