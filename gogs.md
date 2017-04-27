@@ -1,3 +1,5 @@
+# THIS RECIPE IS NOT STABLE ANYMORE please don't use it
+
 This asume you have a git repositories folder in `/home/git/gogs-repositories`
 ```
 docker service create \
