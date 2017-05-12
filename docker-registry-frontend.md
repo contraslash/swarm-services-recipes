@@ -1,5 +1,7 @@
 # Docker Registry Frontend
 
+## THIS RECIPE IS NOT STABLE
+
 ```
 docker service create \
   --network traefik-network \
