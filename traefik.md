@@ -31,6 +31,8 @@ In this example we are maping a folder /etc/traefik to the container. This is to
 The configuration file /etc/traefik/traefik.toml
 
 ```
+defaultEntryPoints = ["http", "https"]
+
 [entryPoints]
   [entryPoints.http]
   address = ":80"
