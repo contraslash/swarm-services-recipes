@@ -120,3 +120,45 @@ docker service create \
   sentry \
   run web
   ```
+  
+## Troubleshooting
+  
+Databases in swarm could become a pain in the ass and also configuring the first upgrade of sentry. We highly recomend to use a separate db server and configure the db using a stand alone container instead a service.
+  
+  Something like this
+  
+  ```
+  docker run -it --rm 
+    --env SENTRY_SECRET_KEY='<secret-key>' 
+    --env SENTRY_REDIS_HOST=sentry-redis \
+    --env SENTRY_POSTGRES_HOST=<host of postgres> \
+    --env SENTRY_POSTGRES_PORT=5432 \
+    --env SENTRY_DB_NAME=<sentry db name> \
+    --env SENTRY_DB_USER=<sentry db user> \
+    --env SENTRY_DB_PASSWORD=<sentry password> \
+    --env SENTRY_REDIS_HOST=<redis host>
+    sentry upgrade
+  ```
+  
+Then execute the services from above.
+
+You can create a temp redis server for this pass and then remove it, replacing REDIS_HOST with a link
+
+First create the temp redis container
+```
+docker run -d --name sentry-redis redis
+```
+Then link to the other container
+```
+docker run -it --rm 
+    --env SENTRY_SECRET_KEY='<secret-key>' 
+    --env SENTRY_REDIS_HOST=sentry-redis \
+    --env SENTRY_POSTGRES_HOST=<host of postgres> \
+    --env SENTRY_POSTGRES_PORT=5432 \
+    --env SENTRY_DB_NAME=<sentry db name> \
+    --env SENTRY_DB_USER=<sentry db user> \
+    --env SENTRY_DB_PASSWORD=<sentry password> \
+    --link sentry-redis:redis
+    sentry upgrade
+```
+
