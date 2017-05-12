@@ -101,3 +101,22 @@ docker service create \
   sentry \
   run worker
 ```
+
+> If you have an existing Postgres Server you can run the with the following env vars
+
+```
+docker service create \
+  --network traefik-network \
+  --env SENTRY_SECRET_KEY='_nz@*2u1+z4(0)@6*@tyb!b3ik6-uu#(4zl_k!s%x9jtinm-6z'\
+  --env SENTRY_REDIS_HOST=sentry-redis \
+  --env SENTRY_POSTGRES_HOST=<host of postgres> \
+  --env SENTRY_POSTGRES_PORT=5432 \
+  --env SENTRY_DB_NAME=<sentry db name> \
+  --env SENTRY_DB_USER=<sentry db user> \
+  --env SENTRY_DB_PASSWORD=<sentry password> \
+  --label traefik.port=9000 \
+  --label traefik.frontend.entryPoints=http,https \
+  --name sentry \
+  sentry \
+  run web
+  ```
