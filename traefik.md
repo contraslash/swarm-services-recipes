@@ -16,12 +16,13 @@ docker service create \
     --publish 443:443 \
     --publish 5808:8080 \
     --mount type=bind,source=/etc/traefik,target=/etc/traefik \
+    --mount type=bind,source=/etc/letsencrypt,target=/etc/letsencrypt \
     --mount type=bind,source=/var/run/docker.sock,target=/var/run/docker.sock \
     --network traefik-network \
     traefik \
     --docker \
     --docker.swarmmode \
-    --docker.domain=example.com \
+    --docker.domain=contraslash.com \
     --docker.watch \
     --web
 ```
@@ -47,6 +48,7 @@ email = "info@finantic.co"
 storage = "/etc/traefik/acme.json"
 entryPoint = "https"
 onDemand = true
+# onHostRule = true
 ```
 
 Also remember to add this label to the containers 
