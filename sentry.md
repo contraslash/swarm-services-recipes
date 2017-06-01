@@ -129,14 +129,14 @@ Databases in swarm could become a pain in the ass and also configuring the first
   
   ```
   docker run -it --rm 
-    --env SENTRY_SECRET_KEY='<secret-key>' 
+    --env SENTRY_SECRET_KEY='<secret-key>' \
     --env SENTRY_REDIS_HOST=sentry-redis \
     --env SENTRY_POSTGRES_HOST=<host of postgres> \
     --env SENTRY_POSTGRES_PORT=5432 \
     --env SENTRY_DB_NAME=<sentry db name> \
     --env SENTRY_DB_USER=<sentry db user> \
     --env SENTRY_DB_PASSWORD=<sentry password> \
-    --env SENTRY_REDIS_HOST=<redis host>
+    --env SENTRY_REDIS_HOST=<redis host> \
     sentry upgrade
   ```
   
@@ -151,14 +151,14 @@ docker run -d --name sentry-redis redis
 Then link to the other container
 ```
 docker run -it --rm 
-    --env SENTRY_SECRET_KEY='<secret-key>' 
+    --env SENTRY_SECRET_KEY='<secret-key>' \
     --env SENTRY_REDIS_HOST=sentry-redis \
     --env SENTRY_POSTGRES_HOST=<host of postgres> \
     --env SENTRY_POSTGRES_PORT=5432 \
     --env SENTRY_DB_NAME=<sentry db name> \
     --env SENTRY_DB_USER=<sentry db user> \
     --env SENTRY_DB_PASSWORD=<sentry password> \
-    --link sentry-redis:redis
+    --link sentry-redis:redis \
     sentry upgrade
 ```
 
