@@ -33,7 +33,6 @@ docker service create \
     --name drone\
     --network traefik-network \
     --label traefik.port=8000 \
-    --mount=type=bind,src=/var/run/docker.sock,dst=/var/run/docker.sock \
     --env-file /etc/drone/dronerc \
     drone/drone:0.7
 ```
