@@ -57,7 +57,9 @@ Then just execute taiga front
 docker service create \
   --name taiga-front-dist \
   --network traefik-network \
-  --label traefik.port=80 \
+  --label traefik.port=2015 \
+  --label traefik.frontend.passHostHeader=true \
   --env TAIGA_FULL_URL=http://taiga.<your_domain>
+  --env TAIGA_FRONT_URL=<your_taiga_front_domain_without_protocol> \
   contraslash/taiga-front-dist
 ```
