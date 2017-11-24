@@ -56,3 +56,26 @@ Also remember to add this label to the containers
 ```
 docker service update <service-name> --label-add traefik.frontend.entryPoints=http,https
 ```
+
+For debugging purposes, you can add this flag to the container
+
+```
+--logLevel=DEBUG
+```
+
+Also if you want to secure web dashboard interface, you can first create a password and then use HTTP auth to enter site
+[Taked from here](https://www.digitalocean.com/community/tutorials/how-to-use-traefik-as-a-reverse-proxy-for-docker-containers-on-ubuntu-16-04)
+
+```
+htpasswd -n admin
+```
+
+Then prompt for your secure password and after in /etc/traefik/traefik.toml
+
+```
+...
+[web]
+address = ":8080"
+  [web.auth.basic]
+  users = ["admin:your_encrypted_password"]
+```
