@@ -2,46 +2,34 @@
 
 Take a look to [Server Install Guide](http://docs.drone.io/installation/)to understand the requirements
 
-I also prefeer use a env-file instead a lot of -e flags
-
-`dronerc` looks like that:
-```
-DRONE_HOST=http://drone.example.com
-DRONE_ADMIN= admin_name, other_admin_name
-
-DATABASE_DRIVER=mysql
-DATABASE_CONFIG=user_of_database:password_for_user@tcp(my_db:y_db_port)/drone?parseTime=true
-
-DRONE_OPEN=true
-DRONE_SECRET=ultra_scret_phrase
-
-# In my case I use Gogs
-DRONE_GOGS=true
-DRONE_GOGS_URL=http://gogs.example.com
-```
-
-And `droneagentrc` looks like that
-```
-DRONE_SERVER=ws://drone.example.com/ws/broker
-# This must be the same phrase
-DRONE_SECRET=ultra_scret_phrase
-```
+In my case I'm using Drone and MySQL
 
 ### Install Server
 ```
 docker service create \
     --name drone\
     --network traefik-network \
-    --label traefik.port=8000 \
-    --env-file /etc/drone/dronerc \
-    drone/drone:0.7
+    --publish 9051:9000 \
+    --label traefik.port="8000" \
+    --label traefik.enable=true \
+    --label traefik.docker.network=traefik-network\
+    --env DRONE_HOST=http://drone.example.com \
+    --env DRONE_ADMIN='ma0,ma0' \
+    --env DATABASE_DRIVER=mysql \
+    --env DATABASE_CONFIG='drone_new_user:new_drone_pass@tcp(db.example.com:3306)/drone08?parseTime=true' \
+    --env DRONE_OPEN=true \
+    --env DRONE_SECRET=secret_pass_code \
+    --env DRONE_GOGS=true \
+    --env DRONE_GOGS_URL=https://gogs.example.com \
+    drone/drone:0.8-alpine
 ```
 
 ### Install Agent
 ```
 docker service create \
   --name drone-agent\
-  --env-file /etc/drone/droneagentrc \
+  --env DRONE_SERVER=drone.example.com:9051 \
+  --env DRONE_SECRET=secret_pass_code \
   --mount=type=bind,src=/var/run/docker.sock,dst=/var/run/docker.sock \
-  drone/drone:0.7 agent
+  drone/agent:0.8-alpine agent
 ```
