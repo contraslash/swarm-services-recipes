@@ -27,6 +27,8 @@ docker service create \
     --web
 ```
 
+> Be sure your node manager has `/etc/traefik` and `/etc/letsencrypt` folders.
+
 In this example we are maping a folder /etc/traefik to the container. This is to allow Automatic HTTPS with Let's Encrypt
 
 The configuration file /etc/traefik/traefik.toml
